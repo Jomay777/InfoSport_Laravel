@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('clubs', function (Blueprint $table) {
             $table->id();
-            $table->String('nameclub');
-            $table->String('delegadoclub');
+            $table->String('club_name', 100)->unique();
+            $table->String('club_delegate');
             $table->timestamps();
         });
     }

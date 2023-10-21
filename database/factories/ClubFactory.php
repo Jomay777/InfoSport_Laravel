@@ -17,8 +17,8 @@ class ClubFactory extends Factory
     public function definition(): array
     {
         return [
-            'nameclub' => $this->faker->text(20),
-            'delegadoclub' => $this->faker->text(20)
+            'club_name' => $this->faker->jobTitle(),
+            'club_delegate' => $this->faker->text(20)
         ];
     }
 }

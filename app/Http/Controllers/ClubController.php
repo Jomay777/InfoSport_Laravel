@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Club;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Redirect;
 
 class ClubController extends Controller
 {
@@ -12,7 +14,10 @@ class ClubController extends Controller
      */
     public function index()
     {
-        //
+        //initializing the Clubs array
+        $clubs = Club::all();
+        //rederizing Show and passing the clubs array 
+        return Inertia::render('Clubs/Index', ['clubs'=>$clubs]);        
     }
 
     /**
@@ -20,7 +25,8 @@ class ClubController extends Controller
      */
     public function create()
     {
-        //
+        //rederizing CreateForm
+        return Inertia::render(('Clubs/Create'));
     }
 
     /**
@@ -28,7 +34,15 @@ class ClubController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //asking for required fields
+        $request->validate([ 
+            'club_name' => 'required|max:100',
+            'club_delegate' => 'required'
+        ]);
+        $club = new Club($request->input());
+        $club->save();
+        return redirect('clubs');
+        //return Redirect::route('clubs.index');
     }
 
     /**
@@ -44,7 +58,7 @@ class ClubController extends Controller
      */
     public function edit(Club $club)
     {
-        //
+        return Inertia::render('Clubs/Edit', ['club' => $club]);
     }
 
     /**
@@ -52,7 +66,12 @@ class ClubController extends Controller
      */
     public function update(Request $request, Club $club)
     {
-        //
+        $request->validate([ 
+            'club_name' => 'required|max:100',
+            'club_delegate' => 'required'
+        ]);
+        $club->update($request->all());
+        return redirect('clubs');
     }
 
     /**
@@ -60,6 +79,7 @@ class ClubController extends Controller
      */
     public function destroy(Club $club)
     {
-        //
+        $club->delete();
+        return redirect('clubs');
     }
 }

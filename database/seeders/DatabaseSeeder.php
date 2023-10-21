@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
              'email' => 'i@admin.com',
-             'password' => bcrypt('123456')
+             'password' => bcrypt('123456'),
         ]);
         Club::factory(10)->create();
     }
